@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="tailwind,tailwindcss,tailwind css,css,starter template,free template,admin templates, admin template, admin dashboard, free tailwind templates, tailwind example">
+    <!-- Css -->
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/all.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css" integrity="sha512-6lLUdeQ5uheMFbWm3CP271l14RsX1xtx+J5x2yeIDkkiBpeVTNhTqijME7GgRKKi6hCqovwCoBTlRBEC20M8Mg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/setmax.css">
+    <link rel="stylesheet" href="/email.css">
+
+    <title>Dashboard | Tailwind Admin</title>
+</head>
+
+<body>
+    <%- include('../partials/donate.ejs'); %>
+<!--Container -->
+<div class="mx-auto bg-grey-400">
+    <!--Screen-->
+    <div class="min-h-screen flex flex-col">
+        <!--Header Section Starts Here-->
+        <%- include('../partials/header.ejs'); %>
+        <!--/Header-->
+
+        <div class="flex flex-1">
+            <!--Sidebar-->
+            <%- include('../partials/aside.ejs'); %>
+            <!--/Sidebar-->
+            <!--Main-->
+            <main class="bg-white-300 flex-1 p-3 overflow-hidden">
+
+                <div class="flex flex-col">
+                    <!-- Stats Row Starts Here -->
+                    <div class="up">
+                        <div class="one flex flex-1 flex-col md:flex-row lg:flex-row mx-2">
+                            <div class="shadow-lg bg-red-vibrant border-l-8 hover:bg-red-vibrant-dark border-red-vibrant-dark mb-2 p-2 md:w-1/4 mx-2">
+                                <div class="p-4 flex flex-col" >
+                                    <a href="gyms" class="no-underline text-white text-2xl">
+                                        Gyms
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="shadow shadow-lg bg-warning border-l-8 hover:bg-warning-dark border-warning-dark mb-2 p-2 md:w-1/4 mx-2">
+                                <div class="p-4 flex flex-col">
+                                    <a href="/addgyms" class="no-underline text-white text-2xl">
+                                        Add Gyms
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="shadow shadow-lg bg-info border-l-8 hover:bg-info-dark border-info-dark mb-2 p-2 md:w-1/4 mx-2">
+                                <div class="p-4 flex flex-col">
+                                    <a href="users" class="no-underline text-white text-2xl">
+                                       Users
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="shadow shadow-lg bg-success border-l-8 hover:bg-success-dark border-success-dark mb-2 p-2 md:w-1/4 mx-2">
+                                <div class="p-4 flex flex-col">
+                                    <a href="/addusers" class="no-underline text-white text-2xl">
+                                        Add Users
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="two flex flex-1 flex-col md:flex-row lg:flex-row mx-2">
+                            <div class="shadow shadow-lg bg-warning border-l-8 hover:bg-warning-dark border-warning-dark mb-2 p-2 md:w-1/4 mx-2 affilate">
+                                <div class="p-4 flex flex-col">
+                                    <a href="/businessdetails" class="no-underline text-white text-2xl">
+                                        Affiliates
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="shadow shadow-lg bg-warning border-l-8 hover:bg-warning-dark border-warning-dark mb-2 p-2 md:w-1/4 mx-2 affilate">
+                                <div class="p-4 flex flex-col">
+                                    <a href="/addbusiness" class="no-underline text-white text-2xl">
+                                        Add Affiliates
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="shadow shadow-lg bg-warning border-l-8 hover:bg-warning-dark border-warning-dark mb-2 p-2 md:w-1/4 mx-2 personal">
+                                <div class="p-4 flex flex-col">
+                                    <a href="/personaltrainer" class="no-underline text-white text-2xl">
+                                        Personal Trainer
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="shadow shadow-lg bg-warning border-l-8 hover:bg-warning-dark border-warning-dark mb-2 p-2 md:w-1/4 mx-2 personal">
+                                <div class="p-4 flex flex-col">
+                                    <a href="/addpersonaltrainer" class="no-underline text-white text-2xl">
+                                        Add Personal Trainer
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="allemails">
+                        <div class="title">Email Lists</div>
+                        <% for(var i=0; i<item.length; i++) {%>
+                            <div class="gyminfo emailinfo">
+                                <div class="emailcheckbox">
+                                    <input type="checkbox" name="" id="">
+                                </div>
+                                <div class="email">
+                                   <%= item[i].email %>
+                                </div>
+                            </div>
+                         <% } %>
+                        <!-- <div class="message">
+                            <textarea name="message" id="" cols="30" rows="10"></textarea>
+                        </div> -->
+                         <div class="sendbtn btn btn-primary">Send</div>
+                    </div>
+
+                    
+
+            </main>
+            <!--/Main-->
+        </div>
+        <!--Footer-->
+        <footer class="bg-grey-darkest text-white p-2">
+            <div class="flex flex-1 mx-auto">&copy; My Design</div>
+        </footer>
+        <!--/footer-->
+
+    </div>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</body>
+
+</html>

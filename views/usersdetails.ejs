@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="tailwind,tailwindcss,tailwind css,css,starter template,free template,admin templates, admin template, admin dashboard, free tailwind templates, tailwind example">
+    <!-- Css -->
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/all.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700,700i" rel="stylesheet">
+    <title>Dashboard | Tailwind Admin</title>
+</head>
+
+<body>
+<!--Container -->
+<div class="mx-auto bg-grey-400">
+    <!--Screen-->
+    <div class="min-h-screen flex flex-col">
+        <!--Header Section Starts Here-->
+        <%- include('../partials/header.ejs'); %>
+        <!--/Header-->
+
+        <div class="flex flex-1">
+            <!--Sidebar-->
+            <%- include('../partials/aside.ejs'); %>
+            <!--/Sidebar-->
+            <!--Main-->
+            <main class="bg-white-300 flex-1 p-3 overflow-hidden">
+
+                <div class="flex flex-col">
+                    <!-- Stats Row Starts Here -->
+                    <div class="up">
+                        <div class="one flex flex-1 flex-col md:flex-row lg:flex-row mx-2">
+                            <div class="shadow-lg bg-red-vibrant border-l-8 hover:bg-red-vibrant-dark border-red-vibrant-dark mb-2 p-2 md:w-1/4 mx-2">
+                                <div class="p-4 flex flex-col" >
+                                    <a href="gyms" class="no-underline text-white text-2xl">
+                                        Gyms
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="shadow shadow-lg bg-warning border-l-8 hover:bg-warning-dark border-warning-dark mb-2 p-2 md:w-1/4 mx-2">
+                                <div class="p-4 flex flex-col">
+                                    <a href="/addgyms" class="no-underline text-white text-2xl">
+                                        Add Gyms
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="shadow shadow-lg bg-info border-l-8 hover:bg-info-dark border-info-dark mb-2 p-2 md:w-1/4 mx-2">
+                                <div class="p-4 flex flex-col">
+                                    <a href="users" class="no-underline text-white text-2xl">
+                                       Users
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="shadow shadow-lg bg-success border-l-8 hover:bg-success-dark border-success-dark mb-2 p-2 md:w-1/4 mx-2">
+                                <div class="p-4 flex flex-col">
+                                    <a href="/addusers" class="no-underline text-white text-2xl">
+                                        Add Users
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="two flex flex-1 flex-col md:flex-row lg:flex-row mx-2">
+                            <div class="shadow shadow-lg bg-warning border-l-8 hover:bg-warning-dark border-warning-dark mb-2 p-2 md:w-1/4 mx-2 affilate">
+                                <div class="p-4 flex flex-col">
+                                    <a href="/businessdetails" class="no-underline text-white text-2xl">
+                                        Affiliates
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="shadow shadow-lg bg-warning border-l-8 hover:bg-warning-dark border-warning-dark mb-2 p-2 md:w-1/4 mx-2 affilate">
+                                <div class="p-4 flex flex-col">
+                                    <a href="/addbusiness" class="no-underline text-white text-2xl">
+                                        Add Affiliates
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="shadow shadow-lg bg-warning border-l-8 hover:bg-warning-dark border-warning-dark mb-2 p-2 md:w-1/4 mx-2 personal">
+                                <div class="p-4 flex flex-col">
+                                    <a href="/personaltrainer" class="no-underline text-white text-2xl">
+                                        Personal Trainer
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="shadow shadow-lg bg-warning border-l-8 hover:bg-warning-dark border-warning-dark mb-2 p-2 md:w-1/4 mx-2 personal">
+                                <div class="p-4 flex flex-col">
+                                    <a href="/addpersonaltrainer" class="no-underline text-white text-2xl">
+                                        Add Personal Trainer
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="filter">
+                        <div class="filtertext" onclick="filter()">Filter</div>
+                        <div class="filterinputs" id="filtertabs">
+                            <form action="/filterusers" method="post">
+                                <input type="checkbox" name="all" id="" ><label for="">All</label>
+                                <input type="checkbox" name="msg" id=""><label for="">Message</label>
+                                <input type="checkbox" name="train" id=""><label for="">Training</label>
+                                <button type="submit">Filter</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="allgyms">
+                        <% for(var i=0; i<item.length; i++) {%>
+                            <div class="gyminfo">
+                                <div class="rightcorner" onclick="edit('<%= item[i].id%>')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24.001 8.534l-11.103 11.218-5.898 1.248 1.361-5.784 11.104-11.216 4.536 4.534zm-24 10.466l-.001 2h5v-2h-4.999z"/></svg>
+                                </div>
+                                <!-- imgg -->
+                                <div class="gymname"><%= item[i].name%></div>
+                                <div class="otherinfo">
+                                    <div class="city">Bio: <%= item[i].userbio %></div>
+                                    <div class="city">Service: <%= item[i].service %></div>
+                                    <div class="city">City: <%= item[i].city %></div>
+                                    <div class="city">State: <%= item[i].state %></div>
+                                    <div class="city">ZipCode: <%= item[i].zipcode %></div>
+                                </div>
+                            </div>
+                         <% } %>
+                    </div>
+                    <!-- /Stats Row Ends Here -->
+
+                    <!-- Card Sextion Starts Here -->
+                   
+                    <!-- /Cards Section Ends Here -->
+
+                    <!-- Progress Bar -->
+                    
+                    <!--Profile Tabs-->
+                    
+            </main>
+            <!--/Main-->
+        </div>
+        <!--Footer-->
+        <footer class="bg-grey-darkest text-white p-2">
+            <div class="flex flex-1 mx-auto">&copy; My Design</div>
+        </footer>
+        <!--/footer-->
+
+    </div>
+
+    <div class="edit" id="editt">
+        <form method="post" action="/editusers" >
+            <main class="bg-white-500 flex-1 p-3 overflow-hidden">
+                <div class="flex flex-col editdiv">
+                    <!-- Card Sextion Starts Here -->
+                    <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
+                        <!--Horizontal -->
+                        <div class="mb-2 border-solid border-grey-light rounded border shadow-sm w-full md:w-1/2 lg:w-1/2 admindiv">
+                            <div class="bg-gray-300 px-2 py-3 border-solid border-gray-400 border-b">
+                                Admin Information
+                            </div>
+                            <div class="p-3">
+                                    <div class="md:flex md:items-center mb-6">
+                                        <div class="md:w-1/4">
+                                            <label class="block text-gray-500 font-regular md:text-right mb-1 md:mb-0 pr-4"
+                                                for="inline-full-name">
+                                                Name
+                                            </label>
+                                        </div>
+                                        <div class="md:w-3/4">
+                                            <input class="bg-grey-200 appearance-none border-1 border-grey-200 rounded w-full py-2 px-4 text-grey-darker leading-tight focus:outline-none focus:bg-white focus:border-purple-light"
+                                                id="inline-full-name" type="text" value="Jane Doe" name="name">
+                                        </div>
+                                    </div>
+                                    <div class="md:flex md:items-center mb-6">
+                                        <div class="md:w-1/4">
+                                            <label class="block text-grey font-regular md:text-right mb-1 md:mb-0 pr-4"
+                                                for="inline-username">
+                                                Password
+                                            </label>
+                                        </div>
+                                        <div class="md:w-3/4">
+                                            <input class="bg-grey-200 appearance-none border-1 border-grey-200 rounded w-full py-2 px-4 text-grey-darker leading-tight focus:outline-none focus:bg-white focus:border-purple-light"
+                                                id="inline-username" type="password"
+                                                placeholder="******************" name="pass">
+                                        </div>
+                                    </div>
+                                    <div class="md:flex md:items-center">
+                                        <div class="md:w-1/3"></div>
+                                        <div class="md:w-2/3">
+                                            <button class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                                                    type="submit">
+                                                Confirm
+                                            </button>
+                                        </div>
+                                        <div class="md:w-2/3">
+                                            <a href="/usersdetails">
+                                                <div class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded cancle"
+                                                    type="" >
+                                                Cancel
+                                                </div>
+                                            </a> 
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
+                        <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
+                            <div class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
+                                Change Gym Details
+                            </div>
+                            <div class="p-3" id="change">
+                                    <div class="flex flex-wrap -mx-3 mb-6">
+                                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                                for="grid-first-name">
+                                                Changed User Name 
+                                            </label>
+                                            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500"
+                                                id="grid-first-name" type="text" placeholder="Business Name" name="username">
+                                            <p class="text-red-500 text-xs italic">Please fill out this field.</p>
+                                        </div>
+                                        <div class="w-full md:w-1/2 px-3">
+                                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                                for="grid-last-name">
+                                                Business Bio
+                                            </label>
+                                            <textarea class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                                id="grid-last-name" type="number" placeholder="Bio" name="bio"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-wrap -mx-3 mb-6">
+                                        <div class="w-full px-3">
+                                            <label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1"
+                                                for="grid-password">
+                                                Field
+                                            </label>
+                                            <input class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+                                                id="grid-password" type="text" placeholder="Technical" name="businessfield">
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-wrap -mx-3 mb-2">
+                                        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                            <label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1"
+                                                for="grid-city">
+                                                State
+                                            </label>
+                                            <input class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+                                                id="grid-city" type="text" placeholder="Washington" name="bstate">
+                                        </div>
+                                        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                            <label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1"
+                                                for="grid-city">
+                                                City
+                                            </label>
+                                            <input class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+                                                id="grid-city" type="text" placeholder="City" name="bcity">
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/Grid Form-->
+                </div>
+            </main>
+        </form>
+    </div>
+
+</div>
+<script >
+    function filter(){
+        let filteroptions = document.getElementById("filtertabs");
+        const element = document.querySelector('#filtertabs')
+        const style = getComputedStyle(element);
+        console.log(style.display);
+        if(style.display == "none"){
+            filteroptions.style.display = "block";
+        }
+        else{
+            filteroptions.style.display = "none";
+        }
+    }
+    let count=0;
+    function edit(e){
+        count++;
+        console.log(e);
+        let editt = document.getElementById("editt");
+        if(editt.style.display == 'none'){
+            editt.style.display='flex';
+            var getMeTo = document.getElementById("editt");
+            getMeTo.scrollIntoView({behavior: 'smooth'}, true);
+            document.body.style.overflowY="hidden";
+        }
+        else{
+            editt.style.display='none';
+            document.body.style.overflowY="none";
+        }
+        var d1 = document.getElementById('change');
+        if(count>1){
+            d1.insertAdjacentHTML('afterend', `<div class="md:flex md:items-center mb-6 visible">
+                                        <div class="md:w-1/4">
+                                            <label class="block text-gray-500 font-regular md:text-right mb-1 md:mb-0 pr-4"
+                                                for="inline-full-name">
+                                                Id
+                                            </label>
+                                        </div>
+                                        <div class="md:w-3/4">
+                                            <input class="bg-grey-200 appearance-none border-1 border-grey-200 rounded w-full py-2 px-4 text-grey-darker leading-tight focus:outline-none focus:bg-white focus:border-purple-light"
+                                                id="inline-full-name" type="text" value="${e}" name="changeid">
+                                        </div>
+                                    </div>`);
+        }
+    }
+
+    function searchoption(){
+        console.log("hellooo");
+        let options = document.getElementById("options");
+        const element = document.querySelector('#options');
+        const style = getComputedStyle(element);
+        let searchbyname = document.getElementById("searchbyname");
+        let searchbycity = document.getElementById("searchbycity");
+        let searchbystate = document.getElementById("searchbystate");
+        let searchbyzip = document.getElementById("searchbyzip");
+        if(style.display == "none"){
+            options.style.display = "block";
+        }
+        else{
+            options.style.display = "none";
+            searchbyname.style.display = "none";
+            searchbycity.style.display = "none";
+            searchbystate.style.display = "none";
+            searchbyzip.style.display = "none";
+        }
+    }
+
+    function names(){
+        let searchbyname = document.getElementById("searchbyname");
+        let searchbycity = document.getElementById("searchbycity");
+        let searchbystate = document.getElementById("searchbystate");
+        let searchbyzip = document.getElementById("searchbyzip");
+        const element = document.querySelector('#searchbyname');
+        const stylename = getComputedStyle(element);
+        if(stylename.display == "none"){
+            searchbyname.style.display = "block";
+            searchbycity.style.display = "none";
+            searchbystate.style.display = "none";
+            searchbyzip.style.display = "none";
+        }
+        else{
+            searchbyname.style.display = "none";
+        }
+    }
+
+    function city(){
+        let searchbyname = document.getElementById("searchbyname");
+        let searchbycity = document.getElementById("searchbycity");
+        let searchbystate = document.getElementById("searchbystate");
+        let searchbyzip = document.getElementById("searchbyzip");
+        const element = document.querySelector('#searchbycity');
+        const stylename = getComputedStyle(element);
+        if(stylename.display == "none"){
+            searchbyname.style.display = "none";
+            searchbycity.style.display = "block";
+            searchbystate.style.display = "none";
+            searchbyzip.style.display = "none";
+        }
+        else{
+            searchbyname.style.display = "none";
+        }
+    }
+
+    function state(){
+        let searchbyname = document.getElementById("searchbyname");
+        let searchbycity = document.getElementById("searchbycity");
+        let searchbystate = document.getElementById("searchbystate");
+        let searchbyzip = document.getElementById("searchbyzip");
+        const element = document.querySelector('#searchbystate');
+        const stylename = getComputedStyle(element);
+        if(stylename.display == "none"){
+            searchbyname.style.display = "none";
+            searchbycity.style.display = "none";
+            searchbystate.style.display = "block";
+            searchbyzip.style.display = "none";
+        }
+        else{
+            searchbyname.style.display = "none";
+        }
+    }
+
+    function zip(){
+        let searchbyname = document.getElementById("searchbyname");
+        let searchbycity = document.getElementById("searchbycity");
+        let searchbystate = document.getElementById("searchbystate");
+        let searchbyzip = document.getElementById("searchbyzip");
+        const element = document.querySelector('#searchbyzip');
+        const stylename = getComputedStyle(element);
+        if(stylename.display == "none"){
+            searchbyname.style.display = "none";
+            searchbycity.style.display = "none";
+            searchbystate.style.display = "none";
+            searchbyzip.style.display = "block";
+        }
+        else{
+            searchbyname.style.display = "none";
+        }
+    }
+</script>
+</body>
+
+</html>
