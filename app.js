@@ -10,187 +10,54 @@ var multer = require('multer');
 // var imgModel = require('./model');
 // const { userInfo } = require("os");
 
-const port = process.env.PORT || 500;
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 
 
+// CONFIGS
+const configs = require('config');
+const dbConfig = configs.get('development.database')
+const serverConfig = configs.get('development.server')
+// const paypalConfig = configs.get('development.paypal')
 
-// mongoose.connect("mongodb+srv://Admin:Admin123@cluster0.gcp5u27.mongodb.net/GYMlistDB",{useNewUrlParser: true});
-mongoose.connect("mongodb+srv://shivam:Shivam123@cluster0.gcp5u27.mongodb.net/GYMlistDB?ssl=true", { useNewUrlParser: true });
-// mongoose.connect("mongodb://<username>:<password>@ac-pp1j05o-shard-00-00.gcp5u27.mongodb.net:27017,ac-pp1j05o-shard-00-01.gcp5u27.mongodb.net:27017,ac-pp1j05o-shard-00-02.gcp5u27.mongodb.net:27017/businesslistDB?ssl=true&replicaSet=atlas-xmkp7m-shard-0&authSource=admin&retryWrites=true&w=majority",{useNewUrlParser: true});
-// mongodb://shivam:Shivam123@ac-pp1j05o-shard-00-00.gcp5u27.mongodb.net:27017,ac-pp1j05o-shard-00-01.gcp5u27.mongodb.net:27017,ac-pp1j05o-shard-00-02.gcp5u27.mongodb.net:27017/?ssl=true&replicaSet=atlas-xmkp7m-shard-0&authSource=admin&retryWrites=true&w=majority
-
+mongoose.connect(`mongodb://${dbConfig.host}:${dbConfig.port}/${dbConfig.db}`, {
+    auth: {
+        username: dbConfig.username,
+        password: dbConfig.password,
+    },
+    authSource: "admin",
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+    .then(() => {
+        console.log("Successfully connect to MongoDB.");
+        // initial()
+    })
 app.use(bodyparser.urlencoded({ extended: false }))
 app.use(express.json());
 
-
-
-
-const Pricing1Schema = {
-    first:String,
-    second:String,
-    third:String,
-    forth:String,
-    fifth:String,
-    sixth:String,
-    seventh:String,
-    eightth:String,
-    nineth:String,
-    tenth:String
-};
-const Pricing2Schema = {
-    first:String,
-    second:String,
-    third:String,
-    forth:String,
-    fifth:String,
-    sixth:String,
-    seventh:String,
-    eightth:String,
-    nineth:String,
-    tenth:String
-};
-const taxSchema = {
-    tax : Number
-}
-const massageSchema ={
-    massage : String
-};
-const emailSchema ={
-    email : String
-};
-const socialSchema ={
-    facebook : String,
-    instagram : String,
-    twitter : String,
-    pintrest : String
-};
-const otherSchema ={
-   payall : String,
-   app : String
-};
-const fitnessSchema ={
-   why : String,
-   training : String,
-   tip : String
-};
-const affilateSchema ={
-   top1 : String,
-   top2 : String,
-   top3 : String
-};
-const gymSchema = {
-    title1: String,
-    title2: String,
-    title3: String,
-    title4: String,
-    gymname: String,
-    price: Number,
-    gymbio: String,
-    discountprice: Number,
-    state: String,
-    city: String,
-    zipcode: Number,
-    plan: String,
-    img:
-    {
-        data: Buffer,
-        contentType: String
-    }
-};
-const userSchema = {
-    name: String,
-    service: String,
-    userbio: String,
-    city: String,
-    state: String,
-    zipcode: Number,
-    email: String,
-    img:
-    {
-        data: Buffer,
-        contentType: String
-    },
-    status: String
-};
-const businessSchema = {
-    businessname: String,
-    bio: String
-}
-const personalSchema = {
-    trainername: String,
-    trainerbio: String,
-    location: String
-}
-const adminSchema = {
-    username: String,
-    password: String,
-    id : String,
-    less : Number,
-    large:Number
-};
-const promoSchema = {
-    promocode: String,
-    value: Number
-}
-const ecoSchema = {
-    max: Number
-};
-const preSchema = {
-    max: Number
-};
-const moreSchema = {
-    title: String,
-    title1: String,
-    title2: String,
-    title3: String,
-    title4: String
-};
-var colorSchema = new mongoose.Schema({
-    color1: String,
-    color2: String,
-    color3: String,
-    color4: String
-});
-var imageSchema = new mongoose.Schema({
-    name: String,
-    desc: String,
-    firsttitle: String,
-    secondtitle: String,
-    thirdtitle: String,
-    fourthtitle: String,
-    img:
-    {
-        data: Buffer,
-        contentType: String
-    }
-});
-
-var gymlogoSchema = new mongoose.Schema({
-    img:
-    {
-        data: Buffer,
-        contentType: String
-    }
-});
-
-var newgymSchema = new mongoose.Schema({
-    name: String,
-    desc: String,
-    gymname: String,
-    title: String,
-    firsttitle: String,
-    secondtitle: String,
-    thirdtitle: String,
-    fourthtitle: String,
-    img:
-    {
-        data: Buffer,
-        contentType: String
-    }
-});
-
+const Pricing1Schema = require('./schemas/pricing1.schema')
+const Pricing2Schema = require('./schemas/pricing2.schema')
+const taxSchema = require('./schemas/tax.schema')
+const massageSchema = require('./schemas/massage.schema')
+const emailSchema = require('./schemas/email.schema')
+const otherSchema = require('./schemas/other.schema')
+const fitnessSchema = require('./schemas/fitness.schema')
+const affilateSchema = require('./schemas/affilate.schema')
+const socialSchema = require('./schemas/social.schema')
+const userSchema = require('./schemas/user.schema')
+const businessSchema = require('./schemas/business.schema')
+const personalSchema = require('./schemas/personal.schema')
+const adminSchema = require('./schemas/admin.schema')
+const promoSchema = require('./schemas/promo.schema')
+const ecoSchema = require('./schemas/eco.schema')
+const preSchema = require('./schemas/pre.schema')
+const moreSchema = require('./schemas/more.schema')
+const colorSchema = require('./schemas/color.schema')
+const imageSchema = require('./schemas/image.schema')
+const gymlogoSchema = require('./schemas/gym-logo.schema')
+const gymSchema = require('./schemas/gym.schema')
+const newgymSchema = require('./schemas/new-gym.schema')
 
 
 const PricingInfo1 = mongoose.model("PricingInfo1", Pricing1Schema);
@@ -201,9 +68,7 @@ const EmailInfo = mongoose.model("EmailInfo", emailSchema);
 const OtherInfo = mongoose.model("OtherInfo", otherSchema);
 const FitnessInfo = mongoose.model("FitnessInfo", fitnessSchema);
 const AffilateInfo = mongoose.model("AffilateInfo", affilateSchema);
-
 const SocialInfo = mongoose.model("SocialInfo", socialSchema);
-
 const UserInfo = mongoose.model("UserInfo", userSchema)
 const BusinessInfo = mongoose.model("BusinessInfo", businessSchema);
 const PersonalTrainer = mongoose.model("PersonalTrainer", personalSchema);
@@ -213,16 +78,10 @@ const EcoInfo = mongoose.model("EcoInfo", ecoSchema);
 const PreInfo = mongoose.model("PreInfo", preSchema);
 const MoreInfo = mongoose.model("MoreInfo", moreSchema);
 const color = mongoose.model("color", colorSchema);
-
-
-
 const imgModel = mongoose.model("imgModel", imageSchema);
 const gymLogo = mongoose.model("gymLogo", gymlogoSchema);
 const GymInfo = mongoose.model("GymInfo", gymSchema);
 const newgModel = mongoose.model("newgModel", newgymSchema);
-
-
-
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -1004,9 +863,6 @@ app.get("/graph", function (req, res) {
     res.render('graph')
 })
 
-app.listen(port, function () {
-    console.log("server is running on prot " + port);
+app.listen(serverConfig.port, function () {
+    console.log(`Server started on ${serverConfig.host}:${serverConfig.port}`);
 })
-// app.listen(500, function(){
-//     console.log("server is runnn prot "+ 500);
-// })

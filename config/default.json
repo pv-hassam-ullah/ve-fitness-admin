@@ -1,0 +1,16 @@
+{
+    "development": {
+        "server": {
+            "host":"localhost",
+            "port": "500"
+        },
+        "database": {
+            "db": "ve-fitness_db",
+            "username": "mongo",
+            "password": "mongo",
+            "port": "27017",
+            "host": "localhost"
+        }
+    },
+    "production": {}
+}
