@@ -21,7 +21,7 @@
         <!--Header Section Starts Here-->
         <%- include('../partials/header.ejs'); %>
         <!--/Header-->
-        <%- include('../partials/smallbar.ejs'); %>
+
         <div class="flex flex-1">
             <!--Sidebar-->
             <%- include('../partials/aside.ejs'); %>
@@ -32,7 +32,6 @@
 
                     <div class="flex flex-col">
                         <!-- Card Sextion Starts Here -->
-                        <div class="">
                         <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
                             <!--Horizontal -->
                             <div class="mb-2 border-solid border-grey-light rounded border shadow-sm w-full md:w-1/2 lg:w-1/2">
@@ -88,66 +87,86 @@
                                 </div>
                             </div>
                         </div>
-                        </div>
 
-                        <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
-                            <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
-                                <div class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
-                                    Add Gyms
-                                </div>
-                                <div class="p-3">
-                                        <div class="flex flex-wrap -mx-3 mb-6">
-                                            <div>
-                                                <label for="image">Upload Image: </label>
-                                                <input type="file" id="image"
-                                                    name="image" value="" required class="uploadimg" name="filee">
+                                    <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
+                                        <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
+                                            <div class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
+                                                Add Gyms
                                             </div>
-                                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                                    for="grid-first-name">
-                                                    Title 1
-                                                </label>
-                                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500"
-                                                    id="grid-first-name" type="text" placeholder="Jane" name="title1">
-                                                <p class="text-red-500 text-xs italic">Please fill out this field.</p>
-                                            </div>
-                                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                                    for="grid-first-name">
-                                                    Title 2
-                                                </label>
-                                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500"
-                                                    id="grid-first-name" type="text" placeholder="Jane" name="title2">
-                                                <p class="text-red-500 text-xs italic">Please fill out this field.</p>
-                                            </div>
-                                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                                    for="grid-first-name">
-                                                    Title 3
-                                                </label>
-                                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500"
-                                                    id="grid-first-name" type="text" placeholder="Jane" name="title3">
-                                                <p class="text-red-500 text-xs italic">Please fill out this field.</p>
-                                            </div>
-                                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                                    for="grid-first-name">
-                                                    Title 4
-                                                </label>
-                                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500"
-                                                    id="grid-first-name" type="text" placeholder="Jane" name="title4">
-                                                <p class="text-red-500 text-xs italic">Please fill out this field.</p>
-                                            </div>
-                                            <div class="w-full md:w-1/2 px-3">
-                                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
-                                                    for="grid-last-name">
-                                                    Price
-                                                </label>
-                                                <input class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
-                                                    id="grid-last-name" type="number" placeholder="$200" name="price">
-                                            </div>
-                                        </div>
-                                        <!-- <div class="flex flex-wrap -mx-3 mb-6">
+                                            <div class="p-3">
+                                                <div class="flex flex-wrap -mx-3 mb-6">
+                                                    <div>
+                                                        <label for="image">Upload Image: </label>
+                                                        <input type="file" id="image" name="image" value="" required
+                                                            class="uploadimg" name="filee">
+                                                    </div>
+                                                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                                        <label
+                                                            class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                                            for="grid-first-name">
+                                                            Title 1
+                                                        </label>
+                                                        <input
+                                                            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500"
+                                                            id="grid-first-name" type="text" placeholder="Jane"
+                                                            name="title1">
+                                                        <p class="text-red-500 text-xs italic">Please fill out this
+                                                            field.</p>
+                                                    </div>
+                                                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                                        <label
+                                                            class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                                            for="grid-first-name">
+                                                            Title 2
+                                                        </label>
+                                                        <input
+                                                            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500"
+                                                            id="grid-first-name" type="text" placeholder="Jane"
+                                                            name="title2">
+                                                        <p class="text-red-500 text-xs italic">Please fill out this
+                                                            field.</p>
+                                                    </div>
+                                                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                                        <label
+                                                            class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                                            for="grid-first-name">
+                                                            Title 3
+                                                        </label>
+                                                        <input
+                                                            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500"
+                                                            id="grid-first-name" type="text" placeholder="Jane"
+                                                            name="title3">
+                                                        <p class="text-red-500 text-xs italic">Please fill out this
+                                                            field.</p>
+                                                    </div>
+                                                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                                        <label
+                                                            class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                                            for="grid-first-name">
+                                                            Title 4
+                                                        </label>
+                                                        <input
+                                                            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white-500"
+                                                            id="grid-first-name" type="text" placeholder="Jane"
+                                                            name="title4">
+                                                        <p class="text-red-500 text-xs italic">Please fill out this
+                                                            field.</p>
+                                                    </div>
+                                                    <div class="w-full md:w-1/2 px-3">
+                                                        <label
+                                                            class="block uppercase tracking-wide text-gray-700 text-xs font-light mb-1"
+                                                            for="grid-last-name">
+                                                            Price
+                                                        </label>
+
+                                                        <!-- ADD GYM -->
+                                                        <input
+                                                            class="appearance-none block w-full bg-gray-200 text-grey-darker border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white-500 focus:border-gray-600"
+                                                            id="grid-last-name" type="number" placeholder="$200"
+                                                            name="price">
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="flex flex-wrap -mx-3 mb-6">
                                             <div class="w-full px-3">
                                                 <label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1"
                                                     for="grid-password">
@@ -159,24 +178,29 @@
                                                     you'd like</p>
                                             </div>
                                         </div> -->
-                                        <div class="flex flex-wrap -mx-3 mb-2">
-                                            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                                                <label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1"
-                                                    for="grid-city">
-                                                    Plan
-                                                </label>
-                                                <input class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
-                                                    id="grid-city" type="text" placeholder="Washington" name="plan">
-                                            </div>
-                                            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                                                <label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1"
-                                                    for="grid-city">
-                                                    Economical or Premimum
-                                                </label>
-                                                <input class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
-                                                    id="grid-city" type="text" placeholder="City" name="plan2">
-                                            </div>
-                                            <!-- <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                                <div class="flex flex-wrap -mx-3 mb-2">
+                                                    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                                        <label
+                                                            class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1"
+                                                            for="grid-city">
+                                                            Plan
+                                                        </label>
+                                                        <input
+                                                            class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+                                                            id="grid-city" type="text" placeholder="Washington"
+                                                            name="plan">
+                                                    </div>
+                                                    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                                        <label
+                                                            class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1"
+                                                            for="grid-city">
+                                                            Economical or Premimum
+                                                        </label>
+                                                        <input
+                                                            class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
+                                                            id="grid-city" type="text" placeholder="City" name="plan2">
+                                                    </div>
+                                                    <!-- <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                                                 <label class="block uppercase tracking-wide text-grey-darker text-xs font-light mb-1"
                                                     for="grid-zip">
                                                     Zip
@@ -184,28 +208,28 @@
                                                 <input class="appearance-none block w-full bg-grey-200 text-grey-darker border border-grey-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey"
                                                     id="grid-zip" type="text" placeholder="90210" name="zip">
                                             </div> -->
+                                                </div>
+                                            </div>
                                         </div>
+                                    </div>
+                                    <!--/Grid Form-->
                                 </div>
-                            </div>
-                        </div>
-                        <!--/Grid Form-->
-                    </div>
-                </main>
-            </form>
-            <!--/Main-->
+                            </main>
+                        </form>
+                        <!--/Main-->
+
+                </div>
+                <!--Footer-->
+                <footer class="bg-grey-darkest text-white p-2">
+                    <div class="flex flex-1 mx-auto">&copy; My Design</div>
+                </footer>
+                <!--/footer-->
 
         </div>
-        <!--Footer-->
-        <footer class="bg-grey-darkest text-white p-2">
-            <div class="flex flex-1 mx-auto">&copy; My Design</div>
-        </footer>
-        <!--/footer-->
 
     </div>
 
-</div>
-
-<script src="./main.js"></script>
+    <script src="./main.js"></script>
 
 </body>
 
