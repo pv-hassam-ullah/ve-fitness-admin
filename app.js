@@ -20,19 +20,12 @@ const dbConfig = configs.get('development.database')
 const serverConfig = configs.get('development.server')
 // const paypalConfig = configs.get('development.paypal')
 
-mongoose.connect(`mongodb://${dbConfig.host}:${dbConfig.port}/${dbConfig.db}`, {
-    auth: {
-        username: dbConfig.username,
-        password: dbConfig.password,
-    },
-    authSource: "admin",
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-    .then(() => {
-        console.log("Successfully connect to MongoDB.");
-        // initial()
-    })
+// DATABASE CONNECTION
+const { dbService } = require('./services/db.service')
+const db = new dbService()
+db.connect()
+
+
 app.use(bodyparser.urlencoded({ extended: false }))
 app.use(express.json());
 
@@ -60,28 +53,30 @@ const gymSchema = require('./schemas/gym.schema')
 const newgymSchema = require('./schemas/new-gym.schema')
 
 
-const PricingInfo1 = mongoose.model("PricingInfo1", Pricing1Schema);
-const PricingInfo2 = mongoose.model("PricingInfo2", Pricing2Schema);
-const TaxInfo = mongoose.model("TaxInfo", taxSchema);
-const MassageInfo = mongoose.model("MassageInfo", massageSchema);
-const EmailInfo = mongoose.model("EmailInfo", emailSchema);
-const OtherInfo = mongoose.model("OtherInfo", otherSchema);
-const FitnessInfo = mongoose.model("FitnessInfo", fitnessSchema);
-const AffilateInfo = mongoose.model("AffilateInfo", affilateSchema);
-const SocialInfo = mongoose.model("SocialInfo", socialSchema);
-const UserInfo = mongoose.model("UserInfo", userSchema)
-const BusinessInfo = mongoose.model("BusinessInfo", businessSchema);
-const PersonalTrainer = mongoose.model("PersonalTrainer", personalSchema);
-const adminInfo = mongoose.model("adminInfo", adminSchema);
-const PromoInfo = mongoose.model("PromoInfo", promoSchema);
-const EcoInfo = mongoose.model("EcoInfo", ecoSchema);
-const PreInfo = mongoose.model("PreInfo", preSchema);
-const MoreInfo = mongoose.model("MoreInfo", moreSchema);
-const color = mongoose.model("color", colorSchema);
-const imgModel = mongoose.model("imgModel", imageSchema);
-const gymLogo = mongoose.model("gymLogo", gymlogoSchema);
-const GymInfo = mongoose.model("GymInfo", gymSchema);
-const newgModel = mongoose.model("newgModel", newgymSchema);
+const {
+    PricingInfo1,
+    PricingInfo2,
+    payInfo,
+    PaidInfo,
+    TaxInfo,
+    PremumuserInfo,
+    MassageInfo,
+    ArrayInfo,
+    EmailInfo,
+    FitnessInfo,
+    OtherInfo,
+    AffilateInfo,
+    adminInfo,
+    SocialInfo,
+    UserInfo,
+    PromoInfo,
+    PersonalTrainer,
+    MoreInfo,
+    color,
+    imgModel,
+    gymLogo,
+    GymInfo,
+} = require('./services/models.service')
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -96,35 +91,35 @@ var upload = multer({ storage: storage });
 
 
 
-app.get("/tax",function(req,res){
+app.get("/tax", function (req, res) {
     TaxInfo.find().then(result => {
-        res.render("tax",{tax:result[0].tax});    
+        res.render("tax", { tax: result[0].tax });
     });
 })
-app.post("/tax",function(req,res){
+app.post("/tax", function (req, res) {
     let tax = req.body.tax;
-    TaxInfo.updateOne({ $set: { tax: `${tax}`} }).then(result => {
-        res.redirect("/tax");    
+    TaxInfo.updateOne({ $set: { tax: `${tax}` } }).then(result => {
+        res.redirect("/tax");
     });
 
 })
-app.post("/addmassage",function(req,res){
+app.post("/addmassage", function (req, res) {
     let massage = req.body.massage;
-    MassageInfo.updateOne({ $set: { massage: `${massage}`} }).then(result => {
-        res.render("addemail");    
+    MassageInfo.updateOne({ $set: { massage: `${massage}` } }).then(result => {
+        res.render("addemail");
     });
 })
-app.get("/addmassage",function(req,res){
+app.get("/addmassage", function (req, res) {
     res.render("addmessage");
 })
-app.post("/addmail",function(req,res){
+app.post("/addmail", function (req, res) {
     let email = req.body.email;
     console.log(email);
-    EmailInfo.updateOne({ $set: { email: `${email}`} }).then(result => {
-        res.render("addemail");    
+    EmailInfo.updateOne({ $set: { email: `${email}` } }).then(result => {
+        res.render("addemail");
     });
 })
-app.get("/addemail",function(req,res){
+app.get("/addemail", function (req, res) {
     res.render("addemail");
 })
 app.get("/footer", function (req, res) {
@@ -146,18 +141,18 @@ app.post("/editfoot", function (req, res) {
 
     let app = req.body.app;
 
-    OtherInfo.updateOne({ $set: { app: `${app}`}}).then(result => {
+    OtherInfo.updateOne({ $set: { app: `${app}` } }).then(result => {
         FitnessInfo.updateOne({ $set: { why: `${why}`, training: `${training}`, tip: `${tip}` } }).then(result => {
             SocialInfo.updateOne({ $set: { facebook: `${facebook}`, instagram: `${instagram}`, twitter: `${twitter}`, pintrest: `${pintrest}` } }).then(result => {
                 AffilateInfo.updateOne({ $set: { top1: `${top1}`, top2: `${top2}`, top3: `${top3}` } }).then(result => {
-                    res.render("footer");             
+                    res.render("footer");
                 });
             });
         });
     });
 })
 
-app.get("/gyms", function (req, res){
+app.get("/gyms", function (req, res) {
     // let newmassage = new MassageInfo({
     //     massage : "Welcome "
     // })
@@ -172,16 +167,22 @@ app.get("/gyms", function (req, res){
         }
     });
 });
+
+//ADD GYMS
 app.post('/addgyms', upload.single('image'), (req, res, next) => {
-    // console.log(req.file.filename);
+    console.log('req.body -> ', req.body);
+
+    let plan2Obj = req.body.plan2
+    let plan2Array = plan2Obj.split(",")
+    console.log('plan2Array -> ', plan2Array)
     var obj = {
         title1: req.body.title1,
         title2: req.body.title2,
         title3: req.body.title3,
         title4: req.body.title4,
         gymname: req.body.gymname,
-        plan : req.body.plan,
-        plan2 : req.body.plan2,
+        plan: req.body.plan,
+        plan2: plan2Array,
         price: req.body.price,
         img: {
             data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
@@ -190,10 +191,11 @@ app.post('/addgyms', upload.single('image'), (req, res, next) => {
     }
     GymInfo.create(obj, (err, item) => {
         if (err) {
-            console.log(err);
+            console.log(`error line 190-> `, err);
         }
         else {
             // item.save();
+            console.log('saved new gym -> ', item.plan2)
             res.redirect('/addgyms');
         }
     });
@@ -265,31 +267,33 @@ app.get('/upload', (req, res) => {
 //     data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
 //     contentType: 'image/png'
 // }
-app.post("/up",upload.single('image'),function(req,res){
-    imgModel.updateMany({firstname:"Empire Gaming"}, {$set:
+app.post("/up", upload.single('image'), function (req, res) {
+    imgModel.updateMany({ firstname: "Empire Gaming" }, {
+        $set:
         {
-            "img":""
+            "img": ""
         }
-    }).then(result=>{
+    }).then(result => {
         console.log(result);
-    }) 
+    })
 })
-app.get("/up",function(req,res){
+app.get("/up", function (req, res) {
     res.render("aademo")
 })
 app.post('/upload', upload.single('image'), (req, res, next) => {
 
-    imgModel.updateOne({ _id: "6358d274401a0183d4ef82bd"},
-     { $set:
-         { 
-                    img: {
+    imgModel.updateOne({ _id: "6358d274401a0183d4ef82bd" },
+        {
+            $set:
+            {
+                img: {
                     data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
                     contentType: 'image/png'
                 }
-         }
-     }).then(result => {
-        console.log(result);
-    });
+            }
+        }).then(result => {
+            console.log(result);
+        });
     res.redirect("/moreinfo");
     // var obj = {
     //     name: req.body.name,
@@ -562,51 +566,122 @@ app.post("/login", async function (req, res) {
 })
 
 app.post("/filtersearch", function (req, res) {
-    let all = req.body.all;
-    let economical = req.body.economical;
-    let premimum = req.body.premimum;
-    let economical1 = req.body.economical1;
-    let premimum1 = req.body.premimum;
 
-    if (all == 'on' || (economical == 'on' && premimum == 'on')) {
+    console.log('req.body', req.body)
+    const filters = {
+        all: req.body.all, //all checkbox
+        economical: req.body.economical, //150 checkbox
+        premium: req.body.premium, //500 checkbox
+        economical1: req.body.economical1, // economical checkbox
+        premium1: req.body.premimum1 //premium checkbox
+    }
+
+    // ALL GYMS
+    if (filters.all == 'on' || (filters.economical == 'on' && filters.preimum == 'on')) {
+        console.log(`filters.all == 'on' || (filters.economical == 'on' && filters.preimum == 'on')`)
         GymInfo.find().then(result => {
+            console.log('gyms found: ', result.length)
             res.render('admin', { item: result, type: "gyms" });
         }).catch(err => console.log(err));
+        return
     }
+
     else {
-        if (economical == 'on') {
-            if (economical1 == 'on') {
-                GymInfo.find({ discountprice: { $lte: 50 } }).then(result => {
+        if (filters.economical == 'on') {
+            if (filters.economical1 != 'on' && filters.premium1 != 'on') {
+                console.log(`filters.economical == 'on' -> filters.economical1 != 'on' && filters.premium1 != 'on'`)
+                GymInfo.find({ price: { $lte: 150 } }).then(result => {
+                    console.log('gyms found: ', result.length)
                     res.render('admin', { item: result, type: "gyms" });
                 }).catch(err => console.log(err));
+                return
             }
-            if (premimum1 == 'on') {
-                GymInfo.find({ discountprice: { $lte: 150, $gt: 50 } }).then(result => {
+            if (filters.economical1 == 'on') {
+                console.log(`filters.economical == 'on' -> filters.economical1 == 'on'`)
+                GymInfo.find({ plan2: { $in: ['Economical'] }, price: { $lte: 150 } }).then(result => {
+                    console.log('gyms found: ', result.length)
                     res.render('admin', { item: result, type: "gyms" });
                 }).catch(err => console.log(err));
+                return
             }
-            GymInfo.find({ discountprice: { $lte: 100 } }).then(result => {
-                res.render('admin', { item: result, type: "gyms" });
-            }).catch(err => console.log(err));
+            if (filters.premium1 == 'on') {
+                console.log(`filters.economical == 'on' -> filters.economical1 == 'on'`)
+                GymInfo.find({ plan2: { $in: ['Premium'] }, price: { $gte: 150, $lte: 500 } }).then(result => {
+                    console.log('gyms found: ', result.length)
+                    res.render('admin', { item: result, type: "gyms" });
+                }).catch(err => console.log(err));
+                return
+            }
+            return
         }
-        else {
-            if (premimum == 'on') {
-                if (economical1 == "on") {
-                    GymInfo.find({ discountprice: { $lte: 300, $gt: 150 } }).then(result => {
-                        res.render('admin', { item: result, type: "gyms" });
-                    }).catch(err => console.log(err));
-                }
-                if (premimum1 == 'on') {
-                    GymInfo.find({ discountprice: { $lte: 501, $gt: 300 } }).then(result => {
-                        res.render('admin', { item: result, type: "gyms" });
-                    }).catch(err => console.log(err));
-                }
+        else if (filters.premium == 'on') {
+            if (filters.economical1 != 'on' && filters.premium1 != 'on') {
+                console.log(`filters.premium == 'on' -> filters.economical1 != 'on' && filters.premium1 != 'on'`)
+                GymInfo.find({ price: { $lte: 500 } }).then(result => {
+                    console.log('gyms found: ', result.length)
+                    res.render('admin', { item: result, type: "gyms" });
+                }).catch(err => console.log(err));
+                return
             }
-            GymInfo.find({ discountprice: { $lte: 300, $gt: 100 } }).then(result => {
-                res.render('admin', { item: result, type: "gyms" });
-            }).catch(err => console.log(err));
+            if (filters.economical1 == 'on') {
+                console.log(`filters.premium == 'on' -> filters.economical1 == 'on'`)
+                GymInfo.find({ plan2: { $in: ['Economical'] }, price: { $lte: 150 } }).then(result => {
+                    console.log('gyms found: ', result.length)
+                    res.render('admin', { item: result, type: "gyms" });
+                }).catch(err => console.log(err));
+                return
+            }
+            if (filters.premium1 == 'on') {
+                console.log(`filters.premium == 'on' -> filters.premium1 == 'on'`)
+                GymInfo.find({ plan2: { $in: ['Premium'] }, price: { $lte: 500 } }).then(result => {
+                    console.log('gyms found: ', result.length)
+                    res.render('admin', { item: result, type: "gyms" });
+                }).catch(err => console.log(err));
+                return
+            }
+            return
         }
     }
+
+    // if (all == 'on' || (economical == 'on' && premimum == 'on')) {
+    //     GymInfo.find().then(result => {
+    //         res.render('admin', { item: result, type: "gyms" });
+    //     }).catch(err => console.log(err));
+    // }
+    // else {
+    //     if (economical == 'on') {
+    //         if (economical1 == 'on') {
+    //             GymInfo.find({ discountprice: { $lte: 50 } }).then(result => {
+    //                 res.render('admin', { item: result, type: "gyms" });
+    //             }).catch(err => console.log(err));
+    //         }
+    //         if (premimum1 == 'on') {
+    //             GymInfo.find({ discountprice: { $lte: 150, $gt: 50 } }).then(result => {
+    //                 res.render('admin', { item: result, type: "gyms" });
+    //             }).catch(err => console.log(err));
+    //         }
+    //         GymInfo.find({ discountprice: { $lte: 100 } }).then(result => {
+    //             res.render('admin', { item: result, type: "gyms" });
+    //         }).catch(err => console.log(err));
+    //     }
+    //     else {
+    //         if (premimum == 'on') {
+    //             if (economical1 == "on") {
+    //                 GymInfo.find({ discountprice: { $lte: 300, $gt: 150 } }).then(result => {
+    //                     res.render('admin', { item: result, type: "gyms" });
+    //                 }).catch(err => console.log(err));
+    //             }
+    //             if (premimum1 == 'on') {
+    //                 GymInfo.find({ discountprice: { $lte: 501, $gt: 300 } }).then(result => {
+    //                     res.render('admin', { item: result, type: "gyms" });
+    //                 }).catch(err => console.log(err));
+    //             }
+    //         }
+    //         GymInfo.find({ discountprice: { $lte: 300, $gt: 100 } }).then(result => {
+    //             res.render('admin', { item: result, type: "gyms" });
+    //         }).catch(err => console.log(err));
+    //     }
+    // }
 })
 
 
@@ -669,20 +744,20 @@ app.post("/editgyms", function (req, res) {
     let plan2 = req.body.plan2;
 
     console.log(editid);
-    GymInfo.updateOne({ _id: editid }, 
+    GymInfo.updateOne({ _id: editid },
         {
-             $set: { 
-                title1: `${gymnamee}` ,
-                title2 : title2,
-                title3 : title3,
-                title4 : title4,
-                price :price,
-                plan :plan,
-                plan2 :plan2
+            $set: {
+                title1: `${gymnamee}`,
+                title2: title2,
+                title3: title3,
+                title4: title4,
+                price: price,
+                plan: plan,
+                plan2: plan2
             }
         }).then(result => {
-        console.log(result);
-    });
+            console.log(result);
+        });
     res.redirect("/gyms");
 })
 app.post("/editpersonaltrainer", function (req, res) {
@@ -694,52 +769,54 @@ app.post("/editpersonaltrainer", function (req, res) {
     });
     res.redirect("/personaltrainer");
 })
-app.post("/gymschange",function(req,res){
+app.post("/gymschange", function (req, res) {
     console.log("thten");
     console.log(req.body.tenth);
-    PricingInfo1.updateMany({$set:
+    PricingInfo1.updateMany({
+        $set:
         {
-            first:req.body.first,
-            second:req.body.second,
-            third:req.body.third,
-            forth:req.body.forth,
-            fifth:req.body.fifth,
-            sixth:req.body.sixth,
-            seventh:req.body.seventh,
-            eightth:req.body.eightth,
-            nineth:req.body.nineth,
-            tenth:req.body.tenth
+            first: req.body.first,
+            second: req.body.second,
+            third: req.body.third,
+            forth: req.body.forth,
+            fifth: req.body.fifth,
+            sixth: req.body.sixth,
+            seventh: req.body.seventh,
+            eightth: req.body.eightth,
+            nineth: req.body.nineth,
+            tenth: req.body.tenth
         }
-    }).then(ecogyms=>{
-        PricingInfo2.updateMany( {$set:
+    }).then(ecogyms => {
+        PricingInfo2.updateMany({
+            $set:
             {
-                first:req.body.firstp,
-                second:req.body.secondp,
-                third:req.body.thirdp,
-                forth:req.body.forthp,
-                fifth:req.body.fifthp,
-                sixth:req.body.sixthp,
-                seventh:req.body.seventhp,
-                eightth:req.body.eightthp,
-                nineth:req.body.ninethp,
-                tenth:req.body.tenthp
+                first: req.body.firstp,
+                second: req.body.secondp,
+                third: req.body.thirdp,
+                forth: req.body.forthp,
+                fifth: req.body.fifthp,
+                sixth: req.body.sixthp,
+                seventh: req.body.seventhp,
+                eightth: req.body.eightthp,
+                nineth: req.body.ninethp,
+                tenth: req.body.tenthp
             }
-        }).then(pregyms=>{
+        }).then(pregyms => {
             PricingInfo1.find().then(ecogyms => {
                 PricingInfo2.find().then(pregyms => {
-                    res.render("pricinggyms",{ecogyms:ecogyms[0],pregyms:pregyms[0]});
+                    res.render("pricinggyms", { ecogyms: ecogyms[0], pregyms: pregyms[0] });
+                }).catch(err => console.log(err));
             }).catch(err => console.log(err));
-        }).catch(err => console.log(err));
             // res.render("pricinggyms",{ecogyms:ecogyms[0],pregyms:pregyms[0]/
         })
-    }) 
+    })
 })
-app.get("/pricinggyms",function(req,res){
+app.get("/pricinggyms", function (req, res) {
     PricingInfo1.find().then(ecogyms => {
         PricingInfo2.find().then(pregyms => {
-            res.render("pricinggyms",{ecogyms:ecogyms[0],pregyms:pregyms[0]});
+            res.render("pricinggyms", { ecogyms: ecogyms[0], pregyms: pregyms[0] });
+        }).catch(err => console.log(err));
     }).catch(err => console.log(err));
-}).catch(err => console.log(err));
 })
 app.post("/editbusiness", function (req, res) {
     let editid = req.body.changeid;

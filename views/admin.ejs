@@ -161,13 +161,13 @@
                         <div class="filtertext" onclick="filter()">Filter</div>
                         <div class="filterinputs" id="filtertabs">
                             <form action="/filtersearch" method="post">
-                                <input type="checkbox" name="all" id="" ><label for="">All</label>
-                                <input type="checkbox" name="premium" id="pacakage500" onclick="checkdata()"><label for="">$500 Package</label>
-                                <input type="checkbox" name="economical" id="pacakage150" onclick="checkdata()"><label for="">$150 Package</label>
+                                <input type="checkbox" value="on" name="all" id="" ><label for="">All</label>
+                                <input type="checkbox" value="on" name="premium" id="pacakage500" onclick="checkdata()"><label for="">$500 Package</label>
+                                <input type="checkbox" value="on" name="economical" id="pacakage150" onclick="checkdata()"><label for="">$150 Package</label>
                                 <button type="submit">Filter</button>
                                 <div class="preeco" id="ecopre">
-                                    <input type="checkbox" id="premimum1" name="premimum1"  ><label>Premimum</label>
-                                    <input type="checkbox" id="economical1" name="economical1" ><label>Economical</label>
+                                    <input type="checkbox" value="on" id="premium1" name="premimum1"  ><label>Premimum</label>
+                                    <input type="checkbox" value="on" id="economical1" name="economical1" ><label>Economical</label>
                                 </div>
                             </form>
                         </div>
@@ -178,10 +178,7 @@
                                 <div class="rightcorner" onclick="edit('<%= item[i].id%>')">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24.001 8.534l-11.103 11.218-5.898 1.248 1.361-5.784 11.104-11.216 4.536 4.534zm-24 10.466l-.001 2h5v-2h-4.999z"/></svg>
                                 </div>
-                                <div class="profileimg">
-                                    <img src="data:item[i]/<%=item[i].img.contentType%>;base64,
-                                    <%=item[i].img.data.toString('base64')%>">
-                                </div>
+                                <div class="profileimg"> <img src="data:image/png;base64, <%=item[i].img.data%>"> </div>
                                 <div class="gymname"><%= item[i].title1%></div>
                                 <div class="otherinfo">
                                     <div class="gymprice line2">  <%= item[i].title2 %></div>
@@ -393,7 +390,7 @@
         let filteroptions = document.getElementById("filtertabs");
         const element = document.querySelector('#filtertabs')
         const style = getComputedStyle(element);
-        console.log(style.display);
+        console.log('style.display: ',style.display);
         if(style.display == "none"){
             filteroptions.style.display = "block";
         }

@@ -11,6 +11,7 @@ const gymSchema = {
     city: String,
     zipcode: Number,
     plan: String,
+    plan2: [String],
     img:
     {
         data: Buffer,
