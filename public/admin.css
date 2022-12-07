@@ -38,7 +38,33 @@
 .allgyms{
     display: grid;
     grid-template-columns: auto auto auto;
-    padding: 10px;
+    /* padding: 10px; */
+}
+
+@media only screen and (max-width: 1050px){
+    .allgyms{
+        display: grid;
+        grid-template-columns: auto;
+        padding: 10px;
+    }
+}
+
+.smallmenu{
+    display:none;
+}
+
+.largemenu{
+    display:visible;
+}
+
+@media only screen and (max-width: 1050px){
+    .smallmenu{
+        display:block;
+    }
+    .largemenu{
+        display:none;
+    }
+    
 }
 
 .edit{

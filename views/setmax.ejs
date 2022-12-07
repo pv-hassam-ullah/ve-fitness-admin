@@ -24,7 +24,7 @@
         <!--Header Section Starts Here-->
         <%- include('../partials/header.ejs'); %>
         <!--/Header-->
-
+        <%- include('../partials/smallbar.ejs'); %>
         <div class="flex flex-1">
             <!--Sidebar-->
                <%- include('../partials/aside.ejs'); %>
@@ -97,9 +97,10 @@
                         </div>
                     </div>
 
-                    <div class="setmax">
+                    <div class="flex justify-center self-center mt-20">
                         <form action="/setmax" method="post">
                             <div class="maxvalues">
+                                <!-- <div class="flex justify-evenly"> -->
                                 <div class="ecovalue">
                                     <label for="">SET MAX VALUE FOR $150</label>
                                     <input type="text" name="ecovalue" placeholder="Enter max values">

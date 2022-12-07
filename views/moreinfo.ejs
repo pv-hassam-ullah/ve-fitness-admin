@@ -14,15 +14,16 @@
     <title>Forms | Tailwind Admin</title>
 </head>
 
-<body>
+<body class="overflow-x-hidden">
 <!--Container -->
+<!-- bg-grey-lightest -->
 <div class="mx-auto bg-grey-lightest">
     <!--Screen-->
-    <div class="min-h-screen flex flex-col">
+    <div class="">
         <!--Header Section Starts Here-->
         <%- include('../partials/header.ejs'); %>
         <!--/Header-->
-
+        <%- include('../partials/smallbar.ejs'); %>
         <div class="flex flex-1">
             <!--Sidebar-->
             <%- include('../partials/aside.ejs'); %>

@@ -17,6 +17,15 @@ form{
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
+
+@media only screen and (max-width: 1050px){
+    .ecogymse{
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+}
+
+
 #gymss{
     display: flex;
     gap: 50px;

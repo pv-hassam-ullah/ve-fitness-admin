@@ -62,8 +62,15 @@ textarea{
 }
 .alluimages{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
+}
+@media only screen and (max-width: 1050px){
+    .alluimages{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
 }
 .retrive{
     display: flex;

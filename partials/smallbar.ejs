@@ -1,0 +1,110 @@
+
+<script defer src="https://unpkg.com/alpinejs@3.10.2/dist/cdn.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" />
+
+
+<main class="bg-gray-100 text-gray-700 pb-10 md:hidden" x-data="layout">
+
+    <header class="flex items-center justify-between border-b-2 border-gray-200 bg-white p-2">
+        <div class="flex items-center">
+            <div type="button" class="" @click="asideOpen = !asideOpen"><i class="bx bx-menu"></i></div>
+        </div>
+
+      
+        <div>
+            <div type="button" @click="profileOpen = !profileOpen" @click.outside="profileOpen = false"
+                class="h-9 w-9 overflow-hidden rounded-full">
+            </div>
+</div>
+    </header>
+
+    <div class="flex">
+     
+        <aside class="flex w-72 flex-col space-y-2 border-r-2 border-b-2  border-gray-200 bg-white p-2" 
+            x-show="asideOpen">
+            <a href="/gyms" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+    
+                <span>Dashboard</span>
+            </a>
+
+            <a href="/graph" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+           
+                <span>Graph</span>
+            </a>
+
+            <a href="/setmax" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+           
+                <span>Set Max</span>
+            </a>
+
+            <a href="/email" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+              
+                <span> Emails List</span>
+            </a>
+
+            <a href="/pricinggyms" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+         
+                <span>Pricing Gyms List</span>
+            </a>
+
+            <a href="/moreinfo" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+              
+                <span>Add more Information</span>
+            </a>
+
+            <a href="/footer" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+              
+                <span>Footer Section</span>
+            </a>
+
+            <a href="/addemail" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+              
+                <span>Add Email</span>
+            </a>
+
+            <a href="/addmassage" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+              
+                <span>Add Message to User</span>
+            </a>
+
+            <a href="/tax" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+              
+                <span>Change Tax</span>
+            </a>
+
+            <a href="upload" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+              
+                <span>Add home page content</span>
+            </a>
+
+            <a href="/addgymlogo" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+              
+                <span>Add gym logo</span>
+            </a>
+
+            <a href="/color" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+              
+                <span>Home page colors</span>
+            </a>
+
+            <a 
+            href="404.html" 
+            class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+              
+                <span>404 Page</span>
+            </a>
+
+
+        </aside>
+</div>
+</main>
+
+<script>
+    document.addEventListener("alpine:init", () => {
+        Alpine.data("layout", () => ({
+            profileOpen: false,
+            asideOpen: true,
+        }));
+    });
+</script>
+

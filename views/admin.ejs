@@ -84,10 +84,15 @@
             </div>
         </header>
         <!--/Header-->
+      
+            
+        <%- include('../partials/smallbar.ejs'); %>
 
         <div class="flex flex-1">
             <!--Sidebar-->
-            <%- include('../partials/aside.ejs'); %>
+           
+                <%- include('../partials/aside.ejs'); %>
+        
             <!--/Sidebar-->
             <!--Main-->
             <main class="bg-white-300 flex-1 p-3 overflow-hidden">
@@ -173,20 +178,39 @@
                         </div>
                     </div>
                     <div class="allgyms">
+                        <!-- <div class="grid grid-cols-4 gap-3"> -->
                         <% for(var i=0; i<item.length; i++) {%>
-                            <div class="gyminfo">
-                                <div class="rightcorner" onclick="edit('<%= item[i].id%>')">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24.001 8.534l-11.103 11.218-5.898 1.248 1.361-5.784 11.104-11.216 4.536 4.534zm-24 10.466l-.001 2h5v-2h-4.999z"/></svg>
-                                </div>
-                                <div class="profileimg">
+                            <div class="border border-gray-400 shadow-2xl m-10 p-10">
+                                <!-- <div class="grid grid-cols-2 my-5"> -->
+                                <!-- <div class="profileimg"> -->
+                                    <div class="flex justify-end top-0 mx-5" onclick="edit('<%= item[i].id%>')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24.001 8.534l-11.103 11.218-5.898 1.248 1.361-5.784 11.104-11.216 4.536 4.534zm-24 10.466l-.001 2h5v-2h-4.999z"/></svg>
+                                    </div>
+                                    <div class="flex justify-center">
                                     <img src="data:item[i]/<%=item[i].img.contentType%>;base64,
                                     <%=item[i].img.data.toString('base64')%>">
                                 </div>
-                                <div class="gymname"><%= item[i].title1%></div>
-                                <div class="otherinfo">
-                                    <div class="gymprice line2">  <%= item[i].title2 %></div>
-                                    <div class="discountprice line3"> <%= item[i].title3%></div>
-                                    <div class="state line3"><%= item[i].title4 %></div>
+                                
+                                <!-- </div> -->
+                                <div class="mt-10">
+                                <!-- <div class="gymname"> -->
+                                    <div class="flex justify-center">
+                                    <%= item[i].title1%></div>
+
+                                <!-- <div class="otherinfo"> -->
+                                    <div class="mt-5">
+                                    <!-- <div class="gymprice line2"> -->
+                                        <div class="flex justify-center text-blue-500">
+                                          <%= item[i].title2 %>
+                                          
+                                        </div>
+                                    <!-- <div class="discountprice line3">  -->
+                                        <div class="flex justify-center">
+                                        <%= item[i].title3%></div>
+                                    <!-- <div class="state line3"> -->
+                                        <div class="flex justify-center text-green-600">
+                                        <%= item[i].title4 %></div>
+                                </div>
                                 </div>
                             </div>
                          <%  } %>
