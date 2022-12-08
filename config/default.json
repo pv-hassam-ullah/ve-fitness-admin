@@ -1,7 +1,7 @@
 {
     "development": {
         "server": {
-            "host":"localhost",
+            "host": "localhost",
             "port": "500"
         },
         "database": {
@@ -9,7 +9,7 @@
             "username": "mongo",
             "password": "mongo",
             "port": "27017",
-            "host": "localhost"
+            "host": "147.182.249.106"
         }
     },
     "production": {}
