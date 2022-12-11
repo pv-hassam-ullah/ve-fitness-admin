@@ -29,30 +29,6 @@ db.connect()
 app.use(bodyparser.urlencoded({ extended: false }))
 app.use(express.json());
 
-const Pricing1Schema = require('./schemas/pricing1.schema')
-const Pricing2Schema = require('./schemas/pricing2.schema')
-const taxSchema = require('./schemas/tax.schema')
-const massageSchema = require('./schemas/massage.schema')
-const emailSchema = require('./schemas/email.schema')
-const otherSchema = require('./schemas/other.schema')
-const fitnessSchema = require('./schemas/fitness.schema')
-const affilateSchema = require('./schemas/affilate.schema')
-const socialSchema = require('./schemas/social.schema')
-const userSchema = require('./schemas/user.schema')
-const businessSchema = require('./schemas/business.schema')
-const personalSchema = require('./schemas/personal.schema')
-const adminSchema = require('./schemas/admin.schema')
-const promoSchema = require('./schemas/promo.schema')
-const ecoSchema = require('./schemas/eco.schema')
-const preSchema = require('./schemas/pre.schema')
-const moreSchema = require('./schemas/more.schema')
-const colorSchema = require('./schemas/color.schema')
-const imageSchema = require('./schemas/image.schema')
-const gymlogoSchema = require('./schemas/gym-logo.schema')
-const gymSchema = require('./schemas/gym.schema')
-const newgymSchema = require('./schemas/new-gym.schema')
-
-
 const {
     PricingInfo1,
     PricingInfo2,
@@ -229,7 +205,18 @@ app.get('/addgymlogo', (req, res) => {
     });
 });
 
+function encodeImageFileAsURL(element) {
+    var file = element.files[0];
+    var reader = new FileReader();
+    reader.onloadend = function () {
+        console.log('RESULT ->', reader.result)
+    }
+    reader.readAsDataURL(file);
+}
+
 app.post('/uploadgymlogo', upload.single('image'), (req, res, next) => {
+    const file = fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename))
+    encodeImageFileAsURL(file)
     var obj = {
         firsttitle: req.body.firsttitle,
         secondtitle: req.body.secondtitle,

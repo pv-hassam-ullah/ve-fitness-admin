@@ -2,32 +2,6 @@
 
 const mongoose = require("mongoose");
 
-// SCHEMAS
-// const {
-//     Pricing1Schema,
-//     Pricing2Schema,
-//     paySchema,
-//     paidSchema,
-//     taxSchema,
-//     premimumuserSchema,
-//     arrySchema,
-//     massageSchema,
-//     emailSchema,
-//     otherSchema,
-//     fitnessSchema,
-//     affilateSchema,
-//     adminSchema,
-//     socialSchema,
-//     userSchema,
-//     promoSchema,
-//     moreSchema,
-//     imageSchema,
-//     colorSchema,
-//     gymlogoSchema,
-//     gymSchema,
-//     personalSchema
-// } = require('../services/schemas.service')
-
 const {
     PricingInfo1,
     PricingInfo2,
@@ -66,6 +40,10 @@ class dbService {
 
     constructor() {
         this.connect = function () {
+            // CHANGE :
+            // LOCAL DB: localhost:27017
+            // REMOTE DB: 147.182.249.106:27017
+
             mongoose.connect(`mongodb://${dbConfig.host}:${dbConfig.port}/${dbConfig.db}`, {
                 auth: {
                     username: dbConfig.username,
@@ -76,7 +54,7 @@ class dbService {
                 useUnifiedTopology: true,
             })
                 .then(() => {
-                    console.log("Successfully connect to MongoDB.");
+                    console.log(`Successfully connect to MongoDB -> ${dbConfig.host}:${dbConfig.port}/${dbConfig.db}`);
                     this.initial()
                 })
         }
@@ -99,7 +77,7 @@ class dbService {
                     })
                 }
             });
-            
+
             adminInfo.estimatedDocumentCount((err, count) => {
                 if (!err && count === 0) {
                     ADMIN_INFOS.forEach((element) => {
@@ -310,7 +288,6 @@ class dbService {
         }
     }
 }
-
 
 module.exports = {
     dbService
